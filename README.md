@@ -147,6 +147,22 @@ A more practical example is `rep`.
 
 This is often used in conjunction with `pp` to undo all the transformations of the block. Adding a `pp` to the sample above would reset the transformation matrix.
 
+### Conditional (if)
+You can conditionally execute blocks using `if`. The `if` operator pops two items off the stack, both should be blocks. E.g.:
+
+```
+10 /* puts 10 on the stack */
+{
+    0 0 100 100 l /* draw a line */
+}
+{
+    10 eq /* compare the top two items on the stack */
+}
+if
+```
+
+In this case, `if` pops two blocks off the stack, and then executes the conditional block. That pops another item off the stack (in this case, 10) and compares it against 10. It's true, so then we draw a line.
+
 ### Procs
 You can also use blocks to define a procedure. 
 

@@ -2,10 +2,12 @@ class StackVM {
     constructor() {
         this.stack = []
         this.symbolTable = {
+            //Drawing Primitives
             "c": this.circle,
             "e": this.ellipse,
             "r": this.rect,
             "path": this.path,
+            //Math!
             "l": this.line,
             "+": this.add,
             "-": this.sub,
@@ -18,6 +20,7 @@ class StackVM {
             "sin": this.sin,
             "cos": this.cos,
             "tan": this.tan,
+            //transforms/state
             "tr": this.translate,
             "p": this.popMatrix,
             "pp": this.multiPopMatrix,
@@ -27,10 +30,19 @@ class StackVM {
             "nf": this.noFill,
             "f": this.fill,
             "bg": this.background,
+            //control flow
             "{": this.startBlock,
             "exe": this.runBlock,
             "rep": this.repeat,
-            "proc": this.proc
+            "proc": this.proc,
+            "print": () => console.log(this.stack),
+            "if": this.iif,
+            //comparisons
+            "gt": this.gt,
+            "lt": this.lt,
+            "gte": this.gte,
+            "lte": this.lte,
+            "eq": this.eq
         };
         this.blockTable = {};
         this.blockTable["}"] = this.endBlock;
@@ -186,6 +198,34 @@ class StackVM {
         let [y, x] = this.pop(2);
         push();
         scale(x, y);
+    }
+    gt() {
+        let [b, a] = this.pop(2);
+        this.push(a > b);
+    }
+    lt() {
+        let [b, a] = this.pop(2);
+        this.push(a < b);
+    }
+    eq() {
+        let [b, a] = this.pop(2);
+        this.push(a == b);
+    }
+    gte() {
+        let [b, a] = this.pop(2);
+        this.push(a >= b);
+    }
+    lte() {
+        let [b, a] = this.pop(2);
+        this.push(a <= b);
+    }
+    iif() {
+        let [cond, iif] = this.pop(2);
+        this.execute(cond);
+        let f = this.pop(1)[0];
+        if (f) {
+            this.execute(iif);
+        }
     }
     execute(tokens) {
         tokens.forEach((token) => {
