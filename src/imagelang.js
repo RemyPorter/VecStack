@@ -30,6 +30,7 @@ class StackVM {
             "nf": this.noFill,
             "f": this.fill,
             "bg": this.background,
+            "sz": this.size,
             //control flow
             "{": this.startBlock,
             "exe": this.runBlock,
@@ -198,6 +199,10 @@ class StackVM {
         let [y, x] = this.pop(2);
         push();
         scale(x, y);
+    }
+    size() {
+        let [h, w] = this.pop(2);
+        resizeCanvas(w, h, true);
     }
     gt() {
         let [b, a] = this.pop(2);

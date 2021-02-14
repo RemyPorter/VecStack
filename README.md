@@ -63,6 +63,11 @@ This creates a path from (50,30), to (50,20), to (20,20), to (10,10).
 ## Drawing Context
 Context controls are the different ways to change the transform, or drawing settings. Separate from the program stack, each of these commands also interacts with the drawing stack, which is the stack of transforms, drawing settings, etc.
 
+### size
+`w h sz`
+
+`sz` pops two items off the stack, and sets the drawing canvas to that size. Should probably be the first thing in your script, but there's nothing that prevents you from invoking it in the middle of drawing. It just… probably won't do what you want, is all.
+
 ### translate
 `x y tr`
 
