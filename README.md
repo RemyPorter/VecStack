@@ -2,7 +2,7 @@
 
 This is a little toy I threw together. The language is in flux, the way it works is fucking weird, but it's kinda a fun toy. You can try it [here](https://remyporter.github.io/VecStack/index.html). This is a crappy P5js implementation, which I did just because it was a quick way to get to drawing. I'm playing with an idea, not trying to make a useful tool.
 
-Yes, I know, this is basically PostScript. I'm sorta implementing my own version as a learning exrecise. And for fun. And it's not trying to map to PostScript, even if there are some syntactic similarities.
+Yes, I know, this is basically PostScript. I'm sorta implementing my own version as a learning exercise. And for fun. And it's not trying to map to PostScript, even if there are some syntactic similarities.
 
 ## Stacks
 Everything interacts with a stack. Each item/entry you push onto the stack can then be consumed by entries which come later on the stack. For example:
@@ -42,11 +42,11 @@ Pops four items off the stack, draws a line between the two points.
 ### Paths
 Paths are more complicated. Paths consume at least *two* entries off the stack.
 
-`closed n p`
+`closed n path`
 
 `closed` should be a boolean value ("true" or "1" are true, anything else is considered false.) That controls whether or not the path will automatically close itself.
 
-`n` is how many points are in the path. In addition to consuming closed/n off the stack, the `p` operator will consume 2n items off the stack, the x/y coordinate pairs of each point.
+`n` is how many points are in the path. In addition to consuming closed/n off the stack, the `path` operator will consume 2n items off the stack, the x/y coordinate pairs of each point.
 
 For example:
 
@@ -55,7 +55,7 @@ For example:
 20 20
 50 20
 50 30
-true 4 p
+true 4 path
 ```
 
 This creates a path from (50,30), to (50,20), to (20,20), to (10,10).
@@ -127,6 +127,10 @@ The `..` operator pops the last item on the stack, and pushes it back twice. Use
 
 ### Swap
 `<>` swaps the order of the top two items on the stack.
+
+### Deletions
+`--` pops the top element off the stack and discards it.
+`d-` pops an integer off the stack, and then discards `n` items from the stack.
 
 ### Comments
 C-style comments, `/* comment here */` work.
@@ -200,3 +204,6 @@ This creates a new procedure/word/command called `foo`. Using `foo` anywhere in 
 Blocks also are a good way to create constants:
 
 `{10} step proc` means that any time I use `step`, the value `10` will be placed on the stack.
+
+## Other
+`print` will dump the current stack to your browser console. It does not otherwise change the stack.

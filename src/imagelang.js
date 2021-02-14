@@ -7,8 +7,8 @@ class StackVM {
             "e": this.ellipse,
             "r": this.rect,
             "path": this.path,
-            //Math!
             "l": this.line,
+            //Math!
             "+": this.add,
             "-": this.sub,
             "*": this.mult,
@@ -24,7 +24,6 @@ class StackVM {
             "tr": this.translate,
             "p": this.popMatrix,
             "pp": this.multiPopMatrix,
-            "..": this.cloneTop,
             "sc": this.scale,
             "rt": this.rotate,
             "nf": this.noFill,
@@ -39,6 +38,12 @@ class StackVM {
             "print": () => console.log(this.stack),
             "if": this.iif,
             "<>": this.swap,
+            "--": () => this.stack.pop(1),
+            "d-": () => {
+                let n = parseInt(this.stack.pop(1));
+                this.stack.pop(n);
+            },
+            "..": this.cloneTop,
             //comparisons
             "gt": this.gt,
             "lt": this.lt,
