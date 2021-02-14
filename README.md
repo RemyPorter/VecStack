@@ -2,6 +2,8 @@
 
 This is a little toy I threw together. The language is in flux, the way it works is fucking weird, but it's kinda a fun toy. You can try it [here](https://remyporter.github.io/VecStack/index.html). This is a crappy P5js implementation, which I did just because it was a quick way to get to drawing. I'm playing with an idea, not trying to make a useful tool.
 
+Yes, I know, this is basically PostScript. I'm sorta implementing my own version as a learning exrecise. And for fun. And it's not trying to map to PostScript, even if there are some syntactic similarities.
+
 ## Stacks
 Everything interacts with a stack. Each item/entry you push onto the stack can then be consumed by entries which come later on the stack. For example:
 
@@ -97,3 +99,66 @@ Consumes nothing off the program stack. Pops the last entry from the drawing sta
 `n pp`
 
 Consumes one item off the stack, the number of levels you want to pop off the drawing stack.
+
+## Arithmetic
+`+`,`-`,`*`,`/` and `**` (power) are all implemented as arithmetic operators.
+
+### rad/deg
+`rad` pops one item off the stack, converts it to radians, and pushes that onto the stack.
+
+`deg` pops one item off the stack, converts it to radians, and pushes that onto the stack.
+
+### Trig
+`sin`, `cos`, and `tan` all pop the last item off the stack, evaluate the function, and push the result onto the stack. Input should be in radians.
+
+### Constants
+`pi` pushes the value PI onto the stack
+
+## Flow Control
+### Duplicate
+The `..` operator pops the last item on the stack, and pushes it back twice. Useful for situations like scaling:
+
+`0.5 .. sc` is equivalent to `0.5 0.5 sc`
+
+### Blocks
+The fundamental unit of flow control is the block. A block starts when a `{` is encountered in the stack, and the block ends when `}` is encountered. Blocks are a single entry in the stack, and can be pushed and popped like any other entry. Blocks can then be used with other commands.
+
+#### Simple Example
+```
+{
+    0 0 400 400 l
+}
+exe
+```
+
+This defines a block which draws a line. The `exe` operator simply pops the last entry on the stack and tries to execute it as a block. This is basically useless, but illustrates how to create and execute a block.
+
+### Repeat
+A more practical example is `rep`.
+
+```
+{
+    10 10 tr
+    0 0 400 400 l
+} 10 rep
+```
+
+`rep` pops two entries off the stack: a block, and a number of times to repeat that block. Afterwards, it pushes the number of times back on the stack. In the example above, this would pop the block and `10` off the stack, execute the block ten times, and then push `10` back onto the stack.
+
+This is often used in conjunction with `pp` to undo all the transformations of the block. Adding a `pp` to the sample above would reset the transformation matrix.
+
+### Procs
+You can also use blocks to define a procedure. 
+
+```
+{
+    10 10 tr
+    0 0 400 400 l
+} foo proc
+```
+
+This creates a new procedure/word/command called `foo`. Using `foo` anywhere in your program will execute this block.
+
+Blocks also are a good way to create constants:
+
+`{10} step proc` means that any time I use `step`, the value `10` will be placed on the stack.

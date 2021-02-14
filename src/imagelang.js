@@ -8,6 +8,16 @@ class StackVM {
             "path": this.path,
             "l": this.line,
             "+": this.add,
+            "-": this.sub,
+            "*": this.mult,
+            "**": this.pow,
+            "PI": this.pi,
+            "/": this.div,
+            "deg": this.deg,
+            "rad": this.rad,
+            "sin": this.sin,
+            "cos": this.cos,
+            "tan": this.tan,
             "tr": this.translate,
             "p": this.popMatrix,
             "pp": this.multiPopMatrix,
@@ -16,28 +26,43 @@ class StackVM {
             "rt": this.rotate,
             "nf": this.noFill,
             "f": this.fill,
-            "bg": this.background
+            "bg": this.background,
+            "{": this.startBlock,
+            "exe": this.runBlock,
+            "rep": this.repeat,
+            "proc": this.proc
         };
-        this.defineTable = {};
-        Object.keys(this.symbolTable).forEach((k) => {
-            this.defineTable[k] = () => this.symbolStack.push(k);
-        });
-        this.symbolTable[":"] = this.startDefine;
-        this.defineTable[";"] = this.endDefine;
+        this.blockTable = {};
+        this.blockTable["}"] = this.endBlock;
         this.symbolStack = [];
-        this.defining = false;
+        this.blockStack = [];
+        this.blocking = false;
         this.originalTable = this.symbolTable;
     }
-    startDefine() {
-        this.symbolTable = this.defineTable;
-        this.defining = true;
+    runBlock() {
+        let block = this.pop(1)[0];
+        this.execute(block);
     }
-    endDefine() {
+    proc() {
+        let [name, block] = this.pop(2);
+        this.symbolTable[name] = () => this.execute(block);
+    }
+    repeat() {
+        let [times, block] = this.pop(2);
+        for (let i = 0; i < times; i++) {
+            this.execute(block);
+        }
+        this.push(times);
+    }
+    startBlock() {
+        this.symbolTable = this.blockTable;
+        this.blocking = true;
+        this.blockStack = [];
+    }
+    endBlock() {
         this.symbolTable = this.originalTable;
-        let [symbol, ...stack] = this.symbolStack;
-        this.symbolTable[symbol] = () => this.execute(stack);
-        this.symbolStack = [];
-        this.defining = false;
+        this.blocking = false;
+        this.push(this.blockStack);
     }
     push() {
         for (let i = arguments.length - 1; i >= 0; i--) {
@@ -98,6 +123,42 @@ class StackVM {
         let [b, a] = this.pop(2);
         this.push(parseFloat(a) + parseFloat(b));
     }
+    sub() {
+        let [b, a] = this.pop(2);
+        this.push(parseFloat(a) - parseFloat(b));
+    }
+    mult() {
+        let [b, a] = this.pop(2);
+        this.push(parseFloat(a) * parseFloat(b));
+    }
+    div() {
+        let [b, a] = this.pop(2);
+        this.push(parseFloat(a) / parseFloat(b));
+    }
+    pow() {
+        let [b, a] = this.pop(2);
+        this.push(Math.pow(parseFloat(a), parseFloat(b)));
+    }
+    deg() {
+        let a = this.pop(1);
+        this.push(a * 180 / Math.PI);
+    }
+    rad() {
+        let a = this.pop(1);
+        this.push(a * Math.PI / 180);
+    }
+    pi() {
+        this.push(Math.PI);
+    }
+    sin() {
+        this.push(Math.sin(parseFloat(this.pop(1))));
+    }
+    cos() {
+        this.push(Math.cos(parseFloat(this.pop(1))));
+    }
+    tan() {
+        this.push(Math.tan(parseFloat(this.pop(1))));
+    }
     translate() {
         let [y, x] = this.pop(2);
         push();
@@ -131,8 +192,8 @@ class StackVM {
             if (token in this.symbolTable) {
                 this.symbolTable[token].call(this);
             } else {
-                if (this.defining) {
-                    this.symbolStack.push(token);
+                if (this.blocking) {
+                    this.blockStack.push(token);
                 } else {
                     this.push(token);
                 }
