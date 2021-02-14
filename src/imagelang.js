@@ -38,6 +38,7 @@ class StackVM {
             "proc": this.proc,
             "print": () => console.log(this.stack),
             "if": this.iif,
+            "<>": this.swap,
             //comparisons
             "gt": this.gt,
             "lt": this.lt,
@@ -226,11 +227,20 @@ class StackVM {
     }
     iif() {
         let [cond, iif] = this.pop(2);
-        this.execute(cond);
-        let f = this.pop(1)[0];
+        let f = false;
+        if (Array.isArray(cond)) {
+            this.execute(cond);
+            f = this.pop(1)[0];
+        } else {
+            f = cond == "true" || cond == "1" || cond == true; 
+        }
         if (f) {
             this.execute(iif);
         }
+    }
+    swap() {
+        let [a, b] = this.pop(2);
+        this.push(b, a);
     }
     execute(tokens) {
         tokens.forEach((token) => {
@@ -248,6 +258,6 @@ class StackVM {
 }
 
 function execute(stack, program) {
-    let tokens = program.split(/\s+/);
+    let tokens = program.replace(/\/\*.*?\*\//, "").split(/\s+/);
     stack.execute(tokens);
 }

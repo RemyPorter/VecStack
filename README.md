@@ -125,6 +125,12 @@ The `..` operator pops the last item on the stack, and pushes it back twice. Use
 
 `0.5 .. sc` is equivalent to `0.5 0.5 sc`
 
+### Swap
+`<>` swaps the order of the top two items on the stack.
+
+### Comments
+C-style comments, `/* comment here */` work.
+
 ### Blocks
 The fundamental unit of flow control is the block. A block starts when a `{` is encountered in the stack, and the block ends when `}` is encountered. Blocks are a single entry in the stack, and can be pushed and popped like any other entry. Blocks can then be used with other commands.
 
@@ -153,7 +159,7 @@ A more practical example is `rep`.
 This is often used in conjunction with `pp` to undo all the transformations of the block. Adding a `pp` to the sample above would reset the transformation matrix.
 
 ### Conditional (if)
-You can conditionally execute blocks using `if`. The `if` operator pops two items off the stack, both should be blocks. E.g.:
+You can conditionally execute blocks using `if`. The `if` operator pops two items off the stack, both could be blocks. E.g.:
 
 ```
 10 /* puts 10 on the stack */
@@ -167,6 +173,17 @@ if
 ```
 
 In this case, `if` pops two blocks off the stack, and then executes the conditional block. That pops another item off the stack (in this case, 10) and compares it against 10. It's true, so then we draw a line.
+
+Instead of having the condition be a block, however, you could just have the condition be evaluated in place, e.g.:
+
+```
+{
+    0 0 100 100 l
+}
+10 10 eq
+if
+```
+
 
 ### Procs
 You can also use blocks to define a procedure. 
