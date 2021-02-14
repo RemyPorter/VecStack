@@ -1,6 +1,6 @@
 # Stack Based Vector Language
 
-This is a little toy I threw together. The language is in flux, the way it works is fucking weird, but it's kinda a fun toy.
+This is a little toy I threw together. The language is in flux, the way it works is fucking weird, but it's kinda a fun toy. You can try it [here](https://remyporter.github.io/VecStack/index.html). This is a crappy P5js implementation, which I did just because it was a quick way to get to drawing. I'm playing with an idea, not trying to make a useful tool.
 
 ## Stacks
 Everything interacts with a stack. Each item/entry you push onto the stack can then be consumed by entries which come later on the stack. For example:
