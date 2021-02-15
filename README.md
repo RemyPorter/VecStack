@@ -138,6 +138,11 @@ C-style comments, `/* comment here */` work.
 ### Blocks
 The fundamental unit of flow control is the block. A block starts when a `{` is encountered in the stack, and the block ends when `}` is encountered. Blocks are a single entry in the stack, and can be pushed and popped like any other entry. Blocks can then be used with other commands.
 
+#### A Note on Nested Blocks
+You can't. This is because the parser is very dumb (and very simple), and it simply sees the first `}` as the end of the block. The ideal solution is to use procs (see below) instead of nesting blocks.
+
+Maybe I will add nested blocks in the future. I probably will, they make sense, obviously, but at the moment they're a "no no".
+
 #### Simple Example
 ```
 {
