@@ -1,24 +1,17 @@
 const ControlModule = {
-    "{": function () {
-        let orig = this.symbolTable;
-        this.set("originalTable", orig);
-        this.set("blockStack", []);
-        this.symbolTable = {
-            "}": ControlModule["}"],
-            "": function(token) { this.get("blockStack").push(token); }
-        };
-    },
-    "}": function () {
-        this.symbolTable = this.get("originalTable");
-        this.push(this.get("blockStack"));
-    },
     "exe": function () {
         let block = this.pop(1)[0];
-        this.execute(block);
+        let container = this.createContext();
+        container.execute(block);
+        container.transPopAll();
     },
     "proc": function () {
         let [name, block] = this.pop(2);
-        this.definedSymbolTable[name] = () => this.execute(block);
+        this.definedSymbolTable[name] = () => {
+            let ctx = this.createContext();
+            ctx.execute(block);
+            ctx.transPopAll();
+        }
     },
     "rep": function () {
         let [times, block] = this.pop(2);

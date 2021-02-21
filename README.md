@@ -105,6 +105,11 @@ Consumes nothing off the program stack. Pops the last entry from the drawing sta
 
 Consumes one item off the stack, the number of levels you want to pop off the drawing stack.
 
+#### clearpop
+`ppp`
+
+Consumes nothing off the stack, pops all the known transforms off the stack.
+
 ## Arithmetic
 `+`,`-`,`*`,`/` and `**` (power) are all implemented as arithmetic operators.
 
@@ -133,7 +138,7 @@ The `..` operator pops the last item on the stack, and pushes it back twice. Use
 `d-` pops an integer off the stack, and then discards `n` items from the stack.
 
 ### Comments
-C-style comments, `/* comment here */` work.
+C++-style comments, `// comment here` works. No block comments.
 
 ### Blocks
 The fundamental unit of flow control is the block. A block starts when a `{` is encountered in the stack, and the block ends when `}` is encountered. Blocks are a single entry in the stack, and can be pushed and popped like any other entry. Blocks can then be used with other commands.

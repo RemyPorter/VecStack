@@ -1,11 +1,11 @@
 const StateModule = {
     "tr": function () {
         let [y, x] = this.pop(2);
-        push();
+        this.transPush();
         translate(x,y);
     },
     "p": function () {
-        pop();
+        this.transPop();
     },
     "pp": function () {
         let n = this.pop(1);
@@ -13,23 +13,28 @@ const StateModule = {
             pop();
         }
     },
+    "ppp": function() {
+        while (this.stateBag.transformLevel > 0) {
+            this.transPop();
+        }
+    },
     "sc": function () {
         let [y, x] = this.pop(2);
-        push();
+        this.transPush();
         scale(x, y);
     },
     "rt": function () {
         let r = this.pop(1);
-        this.push();
+        this.transPush();
         rotate(r);
     },
     "f": function () {
-        push();
+        this.transPush();
         let f = this.pop(1);
         fill(f);
     },
     "nf": function () {
-        push();
+        this.transPush();
         noFill();
     },
     "sz": function () {

@@ -17,32 +17,20 @@
     <div style="float:right;width:60rem">
     <input type="button" value="Run" id="runprogram" style="width:60rem">
     <textarea id="program" style="width:60rem;height:60em;font-family:monospace">
-{ 
-  tr 
-  0 10 10 c 
-  10 10 10 c 
-  20 10 10 c 
-  p 
-} THREE_CIRCLES proc
-#AAAAAA bg
-#FF00FF f
-10 0 THREE_CIRCLES
-p #00FFFF f
-0.1 rt
-10 20 THREE_CIRCLES
-p rgb(255,255,0) f
-10 40 THREE_CIRCLES
-0 0 200 200 l
-nf
-0 50 tr
-0 0
-10 100
-100 100
-false 3 path
-p
+      // this is a comment
+      #ff00ff f
+      {
+        10 10 tr
+        0 0 20 c
+        {
+          10 2 tr
+          0 0 10 c
+        } 5 rep
+      } 5 rep
     
     </textarea>
     </div>
+    <script type="text/javascript" src="src/grammar.js"></script>
     <script type="text/javascript" src="src/lang-helper.js"></script>
     <script type="text/javascript" src="src/drawing-module.js"></script>
     <script type="text/javascript" src="src/state-module.js"></script>
