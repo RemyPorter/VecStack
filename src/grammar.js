@@ -148,10 +148,10 @@
         peg$c4 = ".",
         peg$c5 = peg$literalExpectation(".", false),
         peg$c6 = function() { return ['num', parseFloat(text())]; },
-        peg$c7 = /^[#a-zA-Z|]/,
-        peg$c8 = peg$classExpectation(["#", ["a", "z"], ["A", "Z"], "|"], false, false),
-        peg$c9 = /^[#a-zA-Z0-9_|]/,
-        peg$c10 = peg$classExpectation(["#", ["a", "z"], ["A", "Z"], ["0", "9"], "_", "|"], false, false),
+        peg$c7 = /^[#a-zA-Z\-\/|<.+*]/,
+        peg$c8 = peg$classExpectation(["#", ["a", "z"], ["A", "Z"], "-", "/", "|", "<", ".", "+", "*"], false, false),
+        peg$c9 = /^[*.\->#a-zA-Z0-9_|]/,
+        peg$c10 = peg$classExpectation(["*", ".", "-", ">", "#", ["a", "z"], ["A", "Z"], ["0", "9"], "_", "|"], false, false),
         peg$c11 = function() { return ['word', text().trim()]; },
         peg$c12 = "\"",
         peg$c13 = peg$literalExpectation("\"", false),
@@ -316,9 +316,9 @@
       s0 = [];
       s1 = peg$parseComment();
       if (s1 === peg$FAILED) {
-        s1 = peg$parseNumeric();
+        s1 = peg$parseWord();
         if (s1 === peg$FAILED) {
-          s1 = peg$parseWord();
+          s1 = peg$parseNumeric();
           if (s1 === peg$FAILED) {
             s1 = peg$parseString();
             if (s1 === peg$FAILED) {
@@ -332,9 +332,9 @@
           s0.push(s1);
           s1 = peg$parseComment();
           if (s1 === peg$FAILED) {
-            s1 = peg$parseNumeric();
+            s1 = peg$parseWord();
             if (s1 === peg$FAILED) {
-              s1 = peg$parseWord();
+              s1 = peg$parseNumeric();
               if (s1 === peg$FAILED) {
                 s1 = peg$parseString();
                 if (s1 === peg$FAILED) {
