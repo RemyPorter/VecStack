@@ -4,6 +4,9 @@ Expression
 Numeric
   = _ ([+-])?[0-9]+("."[0-9]+)? { return ['num', parseFloat(text())]; }
 
+Boolean
+  = _ "true"/"false" { return ['bool', text()==="true"] }
+
 Word
   = _ [#a-zA-Z\-\/|<.+*][*.\->#a-zA-Z0-9_|]* { return ['word', text().trim()]; }
 

@@ -16,8 +16,32 @@ const ControlModule = {
         }
         this.push(times);
     },
+    "for": function() {
+        let [cond, inc, block] = this.pop(3);
+        let [i] = this.pop(1);
+        this.push(i);
+        this.execute(cond);
+        let [c] = this.pop(1);
+        while (c == "true" || c == true || c == 1 || c == "1") {
+            this.push(i);
+            this.execute(block);
+            this.push(i);
+            this.execute(inc);
+            [i] = this.pop(1);
+            this.push(i);
+            this.execute(cond);
+            [c] = this.pop(1);
+        }
+    },
+    "while": function() {
+        let [block, c] = this.pop(2);
+        while (c == "true" || c == true || c == 1 || c == "1") {
+            this.execute(block);
+            [c] = this.pop(1);
+        }
+    },
     "..": function () {
-        let a = this.pop(1);
+        let [a] = this.pop(1);
         this.push(a); this.push(a);
     },
     "<>": function () {

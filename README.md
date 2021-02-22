@@ -202,6 +202,35 @@ Instead of having the condition be a block, however, you could just have the con
 if
 ```
 
+### For Loops
+While repeats are simple loops, a for loop is a much more complex loop which allows for complex operations on the stack. The `for` word pops 3 entries off the stack, expecting them in this sequence:
+
+`{ action } { increment } { condition } for`
+
+**NB**: unlike for loops in other languages, there is no initializer clause. Your stack's topmost item must be your initializer.
+
+`condition` will be run before each loop. It should consume the top item off the stack, evaluate a true/false condition, and push true/false onto the top of the stack. If, after the condition, `true` is on the top of the stack, the `action` will be executed. After the action, the `increment` will execute- this should take the top item off the stack, modify it, and place the result atop the stack.
+
+When `condition` is false, the loop stops.
+
+### While Loops
+While loops are simple loops. They pop two items off the stack, a block and a truthy value. If that truthy value *is* true, the block is executed. The block should, in its execution, push a truthy value to the top of the stack. While that value is true, the block will be re-executed. Otherwise, it'll break.
+
+Example:
+
+```
+0
+true
+{
+  10 10 tr
+  0 0 10 c
+  1 +
+  .. 10 lt
+} while
+```
+
+The `while` command pops the block and true off the stack, then runs the block, which you'll note consumes the 0 at the top of thee stack, incrementing it by one, then duplicating it to see if it's less than 10, which puts a `true` at the top of the stack.
+
 
 ### Procs
 You can also use blocks to define a procedure. 
