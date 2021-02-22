@@ -25,12 +25,23 @@ const StateModule = {
         scale(x, y);
     },
     "rt": function () {
-        let r = this.pop(1);
+        let [r] = this.pop(1);
         rotate(r);
     },
     "f": function () {
-        let f = this.pop(1);
+        let [f] = this.pop(1);
         fill(f);
+    },
+    "st": function () {
+        let [s] = this.pop(1);
+        stroke(s);
+    },
+    "stw": function () {
+        let [sw] = this.pop(1);
+        strokeWeight(sw);
+    },
+    "ns": function() {
+        noStroke();
     },
     "nf": function () {
         noFill();

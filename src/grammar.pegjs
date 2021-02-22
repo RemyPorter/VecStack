@@ -5,7 +5,7 @@ Numeric
   = _ ([+-])?[0-9]+("."[0-9]+)? { return ['num', parseFloat(text())]; }
 
 Word
-  = _ [#a-zA-Z][#a-zA-Z0-9_]* { return ['word', text().trim()]; }
+  = _ [#a-zA-Z|][#a-zA-Z0-9_|]* { return ['word', text().trim()]; }
 
 String
   = _ '"' ("\\\""/[^"])* '"' { return ['str', text()]; }
