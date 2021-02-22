@@ -1,16 +1,12 @@
 const ControlModule = {
     "exe": function () {
         let block = this.pop(1)[0];
-        let container = this.createContext();
-        container.execute(block);
-        container.transPopAll();
+        this.execute(block);
     },
     "proc": function () {
         let [name, block] = this.pop(2);
         this.definedSymbolTable[name] = () => {
-            let ctx = this.createContext();
-            ctx.execute(block);
-            ctx.transPopAll();
+            this.execute(block);
         }
     },
     "rep": function () {

@@ -71,30 +71,34 @@ Context controls are the different ways to change the transform, or drawing sett
 ### translate
 `x y tr`
 
-`tr` pops two items off the stack, and translates to that position. Pushes the transform onto the drawing stack.
+`tr` pops two items off the stack, and translates to that position.
 
 ### rotate
 `r rt`
 
-`rt` pops one item off the stack, and rotates. This should be in radians. Pushes the transform onto the drawing stack.
+`rt` pops one item off the stack, and rotates. This should be in radians.
 
 ### scale
 `x y sc`
 
-Scale pops two items off the stack, and scales by that amount in each dimension. Pushes the transform onto the drawing stack.
+Scale pops two items off the stack, and scales by that amount in each dimension.
 
 ### fill
 #### set fill
 `color f`
 
-Pops one item off the stack, should be a HTML compatible color code (triplet, rgba, etc.) *containing no spaces*, or a value between 0-255. Sets the fill to that color, pushes that setting onto the drawing stack.
+Pops one item off the stack, should be a HTML compatible color code (triplet, rgba, etc.) *containing no spaces*, or a value between 0-255. Sets the fill to that color.
 
 #### clear fill
 `nf`
 
-Consumes nothing off the stack, and clears the fill. Pushes that setting onto the drawing stack. It's important then, to note, that `f`/`nf` are *not* inverse operations- each adds a new entry onto the drawing stack.
+Consumes nothing off the stack, and clears the fill. 
 
-### pop
+### Drawing Stack
+Settings like transform, font, color, etc. can be managed on a separate drawing stack.
+
+#### push
+`psh` captures the current drawing state and pushes it onto the drawing stack. This includes pretty much all configuration: stroke, fill, font, etc. See [p5js#push](https://p5js.org/reference/#/p5/push) docs for details.
 #### pop
 `p` 
 

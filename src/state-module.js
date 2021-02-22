@@ -1,8 +1,10 @@
 const StateModule = {
     "tr": function () {
         let [y, x] = this.pop(2);
-        this.transPush();
         translate(x,y);
+    },
+    "psh": function() {
+        this.transPush();
     },
     "p": function () {
         this.transPop();
@@ -20,21 +22,17 @@ const StateModule = {
     },
     "sc": function () {
         let [y, x] = this.pop(2);
-        this.transPush();
         scale(x, y);
     },
     "rt": function () {
         let r = this.pop(1);
-        this.transPush();
         rotate(r);
     },
     "f": function () {
-        this.transPush();
         let f = this.pop(1);
         fill(f);
     },
     "nf": function () {
-        this.transPush();
         noFill();
     },
     "sz": function () {
