@@ -8,7 +8,7 @@ Word
   = _ [#a-zA-Z][#a-zA-Z0-9_]* { return ['word', text().trim()]; }
 
 String
-  = '"' ("\\\""/[^"])* '"' { return ['str', text()]; }
+  = _ '"' ("\\\""/[^"])* '"' { return ['str', text()]; }
   
 Block
   = _ "{" _ subexpr:Expression _ "}" { return ['block', subexpr] }

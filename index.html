@@ -17,16 +17,20 @@
     <div style="float:right;width:60rem">
     <input type="button" value="Run" id="runprogram" style="width:60rem">
     <textarea id="program" style="width:60rem;height:60em;font-family:monospace">
-      // this is a comment
-      #ff00ff f
-      {
-        10 10 tr
-        0 0 20 c
-        {
-          10 2 tr
-          0 0 10 c
-        } 5 rep
-      } 5 rep
+// this is a comment
+psh
+  #ff00ff f
+  {
+    10 10 tr
+    0 0 20 c
+    {
+      10 2 tr
+      0 0 10 c
+    } 5 rep
+  } 5 rep
+p
+30 fz
+"test" 10 100 txt print
     
     </textarea>
     </div>
@@ -37,6 +41,7 @@
     <script type="text/javascript" src="src/math-module.js"></script>
     <script type="text/javascript" src="src/control-module.js"></script>
     <script type="text/javascript" src="src/conditional-module.js"></script>
+    <script type="text/javascript" src="src/text-module.js"></script>
     <script type="text/javascript" src="src/sketch.js"></script>
   </body>
 </html>

@@ -10,7 +10,7 @@ const StateModule = {
         this.transPop();
     },
     "pp": function () {
-        let n = this.pop(1);
+        let [n] = this.pop(1);
         for (let i = 0; i < n; i++) {
             pop();
         }

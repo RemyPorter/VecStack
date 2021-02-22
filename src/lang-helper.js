@@ -78,9 +78,8 @@ class Runtime {
         ctx.definedSymbolTable = {...this.definedSymbolTable};
         return ctx;
     }
-}
-
-function execute(runtime, program) {
-    let tokens = program.replace(/\/\*.*?\*\//, "").split(/\s+/);
-    runtime.execute(tokens);
+    reset() {
+        this.stack = [];
+        this.clearDefines();
+    }
 }

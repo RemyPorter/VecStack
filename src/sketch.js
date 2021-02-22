@@ -13,15 +13,15 @@ inject(Runtime, DrawingModule);
 inject(Runtime, StateModule);
 inject(Runtime, MathModule);
 inject(Runtime, ControlModule);
-/*inject(vm, ConditionalModule);
-inject(vm, TextModule);*/
+inject(Runtime, ConditionalModule);
+inject(Runtime, TextModule);
 let vm = new Runtime();
 
 
 function draw() {
   if (needsRedraw) {
     clear();
-    vm.clearDefines();
+    vm.reset();
     let tokens;
     try {
       tokens = parser.parse(" " + program.trim())
